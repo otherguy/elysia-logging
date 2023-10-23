@@ -1,0 +1,7 @@
+[install]
+optional = true
+dev = true
+peer = false
+production = false
+frozenLockfile = false
+dryRun = false

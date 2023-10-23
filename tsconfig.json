@@ -1,0 +1,45 @@
+{
+  "compilerOptions": {
+    /* Basic Options */
+    "esModuleInterop": true /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */,
+    "forceConsistentCasingInFileNames": true /* Ensure that casing is correct in imports. */,
+    "skipLibCheck": true /* Skip type checking all .d.ts files. */,
+    "allowJs": true /* Allow JavaScript files to be a part of your program. Use the 'checkJS' option to get errors from these files. */,
+    "resolveJsonModule": true /* Enable importing .json files. */,
+    "moduleDetection": "force" /* This setting controls how TypeScript determines whether a file is a script or a module. */,
+    "verbatimModuleSyntax": true,
+    "experimentalDecorators": true /* Enable experimental support for TC39 stage 2 draft decorators. */,
+    "noEmit": true /* Disable emitting files from a compilation. */,
+    "downlevelIteration": true /* Emit more compliant, but verbose and less performant JavaScript for iteration. */,
+
+    /* Strictness */
+    "alwaysStrict": true /* Ensure 'use strict' is always emitted. */,
+    "strict": true /* Enable all strict type-checking options. */,
+    "strictNullChecks": true /* When type checking, take into account 'null' and 'undefined'. */,
+    "noUncheckedIndexedAccess": true /* Add 'undefined' to a type when accessed using an index. */,
+    "noImplicitAny": true /* Enable error reporting for expressions and declarations with an implied 'any' type. */,
+    "noImplicitReturns": true /* Enable error reporting for codepaths that do not explicitly return in a function. */,
+    "noImplicitThis": true /* Enable error reporting when 'this' is given the type 'any'. */,
+    "noUnusedParameters": true /* Raise an error when a function parameter isn't read. */,
+    "noFallthroughCasesInSwitch": true /* Enable error reporting for fallthrough cases in switch statements. */,
+    "allowUnreachableCode": false /* Disable error reporting for unreachable code. */,
+    "allowUnusedLabels": false /* Disable error reporting for unused labels. */,
+    "preserveConstEnums": true /* Disable erasing 'const enum' declarations in generated code. */,
+    "allowSyntheticDefaultImports": true /* Allow default imports from modules with no default export. */,
+
+    /* Enable latest features */
+    "moduleResolution": "bundler",
+    "module": "ESNext" /* Specify what module code is generated. */,
+    "target": "esnext" /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */,
+    "lib": [
+      "ESNext"
+    ] /* Specify a set of bundled library declaration files that describe the target runtime environment. */,
+
+    /* Types */
+    "types": [
+      "bun-types",
+      "jest",
+      "node"
+    ], /* Specify type package names to be included without being referenced in a source file. */
+  }
+}
