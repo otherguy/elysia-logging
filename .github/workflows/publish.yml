@@ -1,0 +1,63 @@
+name: publish
+on:
+  push:
+    tags:
+      - '\d+\.\d+\.\d+'
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+    steps:
+      # Checkout project repository
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: "0"
+      # Setup Bun environment
+      - uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: 1.0.13
+      # Setup Node environment and install yarn
+      - uses: actions/setup-node@v4
+      # Install dependencies
+      - run: bun install
+      # Build project
+      - name: Bump version and configure NPM
+        run: |
+          cat <<< $(jq --raw-output --arg version ${GITHUB_REF_NAME} '{version: $version} + .' package.json) > package.json
+
+          sudo tee .npmrc > /dev/null <<EOT
+          //registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}
+          //npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}
+          EOT
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish to NPM
+        run: yarn publish --registry https://registry.npmjs.org/ --access=public --tag ${GITHUB_REF_NAME}
+      - name: Publish to GitHub
+        run: yarn publish --registry https://npm.pkg.github.com --access=public --tag ${GITHUB_REF_NAME}
+      # Update CHANGELOG.md section with new version
+      - name: Update CHANGELOG.md and edit GitHub release
+        run: |
+          npm install github-release-notes -g
+
+          gren release --tags "${GITHUB_REF_NAME}" --override --token ${GITHUB_TOKEN} --username ${GITHUB_REPOSITORY_OWNER} --repo ${GITHUB_REPOSITORY#*/}
+          gren changelog --override --changelog-filename CHANGELOG.md --token ${GITHUB_TOKEN} --username ${GITHUB_REPOSITORY_OWNER} --repo ${GITHUB_REPOSITORY#*/}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # Configure Git and commit changes
+      # See https://github.com/orgs/community/discussions/26560
+      - name: Push CHANGELOG.md
+        run: |
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "GitHub Actions"
+
+          git checkout main
+          git add CHANGELOG.md
+          git commit -m "📝 Update CHANGELOG.md for ${GITHUB_REF_NAME}" -m "[skip ci]"
+          git push origin
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

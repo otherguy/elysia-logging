@@ -1,0 +1,76 @@
+{
+  "name": "@otherguy/elysia-logging",
+  "description": "A flexible logging library for Elysia.js",
+  "author": {
+    "name": "otherguy",
+    "url": "https://github.com/otherguy",
+    "email": "hi@otherguy.io"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/otherguy/elysia-logging"
+  },
+  "type": "module",
+  "main": "./dist/index.js",
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "import": "./dist/index.js",
+      "node": "./dist/index.js",
+      "default": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./types": {
+      "types": "./dist/types.d.ts"
+    }
+  },
+  "types": "./src/index.ts",
+  "scripts": {
+    "build": "rm -rf dist && tsc --project tsconfig.esm.json",
+    "dev": "bun run --watch src/index.ts | pino-pretty",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "validate": "tsc --noEmit --skipLibCheck",
+    "lint": "eslint --ext .ts src",
+    "bundle": "bun build --minify --compile src --outfile=build/api",
+    "release": "yarn publish --access public"
+  },
+  "jestSonar": {
+    "reportPath": "reports",
+    "reportFile": "test-report.xml"
+  },
+  "dependencies": {
+    "date-fns": "^2.30.0",
+    "date-fns-tz": "^2.0.0",
+    "elysia": ">= 0.7.17"
+  },
+  "peerDependencies": {
+    "elysia": ">= 0.7.17"
+  },
+  "optionalDependencies": {
+    "pino": "^8.16.2",
+    "pino-pretty": "^10.2.3"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.10",
+    "@typescript-eslint/eslint-plugin": "^6.12.0",
+    "@typescript-eslint/parser": "^6.12.0",
+    "bun-types": "^1.0.13",
+    "eslint": "^8.54.0",
+    "ts-jest": "^29.1.1",
+    "jest": "^29.7.0",
+    "jest-junit": "^16.0.0",
+    "jest-sonar": "^0.2.16",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.3.2"
+  },
+  "homepage": "https://github.com/otherguy/elysia-logging",
+  "bugs": "https://github.com/otherguy/elysia-logging/issues",
+  "license": "MIT",
+  "keywords": [
+    "elysia",
+    "logging",
+    "logger"
+  ]
+}

@@ -1,0 +1,16 @@
+.git
+.gitignore
+.gitattributes
+.github
+bun.lockb
+node_modules
+tsconfig.json
+examples
+spec
+CHANGELOG.md
+sonar-project.properties
+bunfig.toml
+.npmrc
+.grenrc.json
+.editorconfig
+.vscode

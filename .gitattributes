@@ -1,0 +1,11 @@
+* text=auto
+*.js eol=lf
+*.json eol=lf
+*.proto eol=lf
+*.md eol=lf
+*.ts eol=lf
+*.tsx eol=lf
+*.yml eol=lf
+*.7z filter=lfs diff=lfs merge=lfs -text
+*.gz filter=lfs diff=lfs merge=lfs -text
+*.zip filter=lfs diff=lfs merge=lfs -text
