@@ -20,7 +20,7 @@ jobs:
         with:
           bun-version: 1.0.7
       # Setup Node environment and install yarn
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
       # Install dependencies
       - run: bun install
       # Build project
