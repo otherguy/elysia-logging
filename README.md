@@ -16,3 +16,76 @@ An advanced logging plugin designed for [Elysia.js](https://elysiajs.com), prior
 </p>
 
 ---
+
+## Features
+
+## Installation
+
+```bash
+# For bun
+bun add @otherguy/elysia-logging
+
+# For npm
+npm install @otherguy/elysia-logging
+
+# For yarn
+yarn add @otherguy/elysia-logging
+```
+
+## Usage
+
+By default, the plugin will log to the console using the `console` module. The default formatter is `json` and the default log level is `info`.
+
+```ts
+import { Elysia } from "elysia";
+import { ElysiaLogging } from "../src/elysiaLogging";
+
+// Create Elysia app
+const app = new Elysia()
+  .use(ElysiaLogging())
+  .get("/", () => {
+    return new Response("Welcome to Bun!");
+  })
+  .listen(3000);
+
+console.log(`Running at http://${app.server?.hostname}:${app.server?.port}`);
+```
+
+Using the default settings, the plugin will log the following for each request. Since the `console` module is pretty printing the JSON, the output in the console will be formatted slightly differently.
+
+```json
+{
+  "message": "GET / completed with status 200 in 363.3µs",
+  "request": {
+    "ip": "127.0.0.1",
+    "method": "GET",
+    "url": {
+      "path": "/",
+      "params": {}
+    }
+  },
+  "response": {
+    "status_code": 200,
+    "time": 363250
+  }
+}
+```
+
+### Custom Logger
+
+Since the `console` is very limited, you may want to use a custom logger. The recommended logger is [pino](https://github.com/pinojs/pino) but you can use any logger that implements the `Logger` interface.
+
+* [Pino](https://github.com/pinojs/pino)
+* [Winston](https://github.com/winstonjs/winston)
+
+## ⚖️ License
+
+This project is distributed under the [MIT](LICENSE.md) License, allowing for open source distribution and modification, subject to the terms outlined in the [LICENSE.md](LICENSE.md) file.
+
+## 🚧 Contributing
+
+Bug reports, feature requests and Pull Requests are more than welcome on GitHub at [`otherguy/elysia-logging`](https://github.com/otherguy/elysia-logging)! Please remember to add test coverage for your code if you are contributing.
+
+## ♥️ Acknowledgements
+
+* [SaltyAom](https://github.com/SaltyAom) for the [Elysia.js](https://elysiajs.com) framework.
