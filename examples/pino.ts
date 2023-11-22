@@ -51,6 +51,5 @@ const app = new Elysia()
     maxRequestBodySize: Number.MAX_SAFE_INTEGER,
   });
 
-logger.info(
-  `🦊 API is running at http://${app.server?.hostname}:${app.server?.port}`
-);
+logger.info(`🦊 Running at http://${app.server?.hostname}:${app.server?.port}`);
+
