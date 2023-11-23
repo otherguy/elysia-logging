@@ -62,7 +62,7 @@ export class Log {
     // Get basic auth user if set, else "-"
     const basicAuthUser : string= parseBasicAuthHeader(this.logObject.request.headers?.authorization ?? "")?.username ?? "-";
 
-    // @TODO: This is not yet exposed by Elysia (https://github.com/elysiajs/elysia/issues/190)
+    // @TODO: This is not yet exposed by Elysia (https://github.com/elysiajs/elysia/issues/324)
     const requestProtocol : string = this.logObject.request.headers?.["x-forwarded-proto"] ?? "HTTP/1.1";
 
     // Formate date/time of the request (%d/%b/%Y:%H:%M:%S %z)
@@ -70,7 +70,7 @@ export class Log {
     const zonedDate : Date = utcToZonedTime(Date.now(), timeZone);
     const formattedDate : string = format(zonedDate, "dd/MMM/yyyy:HH:mm:ss xx");
 
-    // @TODO: This is not yet exposed by Elysia (https://github.com/elysiajs/elysia/issues/190)
+    // @TODO: This is not yet exposed by Elysia (https://github.com/elysiajs/elysia/issues/324)
     const responseSize : number | undefined = undefined;
 
     // Return formatted log string
