@@ -27,13 +27,16 @@ jobs:
           //registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}
           //npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}
           EOT
+
+          npm dist-tag add <pkg name>@${GITHUB_REF_NAME} latest
+
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Publish to NPM
-        run: yarn publish --registry https://registry.npmjs.org/ --access=public --tag ${GITHUB_REF_NAME}
+        run: yarn publish --registry https://registry.npmjs.org/ --access=public --tag latest
       - name: Publish to GitHub
-        run: yarn publish --registry https://npm.pkg.github.com --access=public --tag ${GITHUB_REF_NAME}
+        run: yarn publish --registry https://npm.pkg.github.com --access=public --tag latest
       - name: Update CHANGELOG.md and edit GitHub release
         run: |
           npm install github-release-notes -g
