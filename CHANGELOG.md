@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.0.12 (23/11/2023)
+*No changelog for this release.*
+
+---
+
 ## 0.0.11 (23/11/2023)
 *No changelog for this release.*
 
