@@ -1,8 +1,9 @@
 import { Elysia } from "elysia";
 import { ElysiaLogging } from "../src/elysiaLogging";
+import { type Logger } from "../src/types";
 
 // Use console for logging
-const logger = console;
+const logger : Logger = console;
 
 // Create ElysiaLogging instance
 const elysiaLogging = ElysiaLogging(logger, {
@@ -28,4 +29,3 @@ const app = new Elysia()
   });
 
 logger.info(`🦊 Running at http://${app.server?.hostname}:${app.server?.port}`);
-

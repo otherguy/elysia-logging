@@ -1,6 +1,7 @@
 import { Elysia } from "elysia";
 import { ElysiaLogging } from "../src/elysiaLogging";
-import { pino, Logger } from "pino";
+import { type Logger } from "../src/types";
+import { pino } from "pino";
 
 // Define Pino logger
 const logger : Logger = pino({
@@ -70,4 +71,3 @@ const app = new Elysia()
   });
 
 logger.info(`🦊 Running at http://${app.server?.hostname}:${app.server?.port}`);
-

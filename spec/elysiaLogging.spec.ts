@@ -1,6 +1,6 @@
 import { Elysia } from "elysia";
 import { ElysiaLogging } from "../src/elysiaLogging";
-import { Logger } from "../src/types";
+import { type Logger } from "../src/types";
 
 interface MockLogger extends Logger {
   debug: <T extends unknown[]>(...args: T) => void;

@@ -17,9 +17,13 @@ An advanced logging plugin designed for [Elysia.js](https://elysiajs.com), prior
 
 ---
 
-## Features
+## 🌈 Features
 
-## Installation
+* **Structured Logging** - Log in JSON format for easy parsing and filtering
+* **Customizable** - Customize the log level, formatter and logger
+* **Production First** - Designed for production environments first
+
+## 🚀 Installation
 
 ```bash
 # For bun
@@ -32,7 +36,7 @@ npm install @otherguy/elysia-logging
 yarn add @otherguy/elysia-logging
 ```
 
-## Usage
+## 📚 Usage
 
 By default, the plugin will log to the console using the `console` module. The default formatter is `json` and the default log level is `info`.
 
@@ -73,66 +77,34 @@ Using the default settings, the plugin will log the following for each request. 
 
 ### Custom Logger
 
-Since the `console` is very limited, you may want to use a custom logger. The recommended logger is [pino](https://github.com/pinojs/pino) but you can use any logger that implements the `Logger` interface.
+Since the `console` is very limited, you may want to use a custom logger. The recommended logger is [pino](https://github.com/pinojs/pino) but you can use any logger that can implement the `Logger` interface.
 
-* [Pino](https://github.com/pinojs/pino)
-* [Winston](https://github.com/winstonjs/winston)
+See the [examples](examples) directory for implementation examples.
 
-#### Pino
+* [Pino](https://github.com/pinojs/pino) (see [Pino](examples/pino.ts) and [Pino Pretty](examples/pino-pretty.ts) examples)
+* [Winston](https://github.com/winstonjs/winston) (see [Winston](examples/winston.ts) example)
 
-```ts
-import { Elysia } from "elysia";
-import { ElysiaLogging, type Logger } from "@otherguy/elysia-logging";
-import { pino } from "pino";
+## 🪜 Examples
 
-// Create Pino logger
-const logger : Logger = pino({
-  level: Bun.env.LOG_LEVEL ?? "info",
-});
+A few examples are provided in the [`examples`](examples) directory.
 
-const app = new Elysia()
-  .use(ElysiaLogging(logger, {
-      format: "json",
-      level: "info",
-  }))
-  .get("/", () => {
-    return new Response("Welcome to Bun!");
-  })
-  .listen(Bun.env.PORT ?? 3000);
+* [Basic](examples/basic.ts) - A basic example of using the plugin with the default settings
+* [JSON](examples/json.ts) - A basic example of logging in JSON
+* [Custom Function](examples/custom-function.ts) - An example of using a function as custom logging formatter
+* [On Error](examples/on-error.ts) - An example of logging errors in addition to access logging
+* [Pino](examples/pino.ts) - An example of using the [Pino](https://github.com/pinojs/pino) logger
+* [Pino Pretty](examples/pino.ts) - An example of using the [Pino](https://github.com/pinojs/pino) logger with [pino-pretty](https://github.com/pinojs/pino-pretty) _(not recommended for production)_
+* [Winston](examples/winston.ts) - An example of using the [Winston](https://github.com/winstonjs/winston) logger
 
-logger.log(`Running at http://${app.server?.hostname}:${app.server?.port}`);
-```
+## 📜 To Do
 
-#### Winston
-
-```ts
-import { Elysia } from "elysia";
-import { ElysiaLogging, type Logger } from "@otherguy/elysia-logging";
-import { createLogger, transports, format } from "winston";
-
-// Create Winston logger
-const logger : Logger = createLogger({
-  level: Bun.env.LOG_LEVEL ?? "info",
-  format: format.json(),
-  transports: [new transports.Console()],
-});
-
-const app = new Elysia()
-  .use(ElysiaLogging(logger, {
-      format: "json",
-      level: "info",
-  }))
-  .get("/", () => {
-    return new Response("Welcome to Bun!");
-  })
-  .listen(Bun.env.PORT ?? 3000);
-
-logger.log(`Running at http://${app.server?.hostname}:${app.server?.port}`);
-```
+* [ ] Add logger format classes
+* [ ] Add whitelist for request parameters
+* [ ] Add more logger examples (Bunyan, npmlog)
 
 ## ⚖️ License
 
-This project is distributed under the [MIT](LICENSE.md) License, allowing for open source distribution and modification, subject to the terms outlined in the [LICENSE.md](LICENSE.md) file.
+This project is distributed under the [MIT](LICENSE.md) license, allowing for open source distribution and modification, subject to the terms outlined in the [LICENSE.md](LICENSE.md) file.
 
 ## 🚧 Contributing
 

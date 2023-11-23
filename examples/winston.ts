@@ -1,23 +1,36 @@
 import { Elysia } from "elysia";
 import { ElysiaLogging } from "../src/elysiaLogging";
 import { type Logger } from "../src/types";
+import { createLogger, transports, format } from "winston";
 
-// Use console for logging
-const logger : Logger = console;
+// Define Winston logger
+const logger : Logger = createLogger({
+  // Use the LOG_LEVEL environment variable, or default to "info"
+  level: Bun.env.LOG_LEVEL ?? "info",
 
-// Create ElysiaLogging instance
-const elysiaLogging = ElysiaLogging(logger, {
-  format: "json",
+  // Use JSON format
+  format: format.json(),
+
+  // Log to the console
+  transports: [new transports.Console()],
 });
 
-// Create Elysia app
+const elysiaLogging = ElysiaLogging(logger, {
+  // Use the pino "http" custom level defined above
+  level: "http",
+
+  // Access logs in JSON format
+  format: "json",
+})
+
+//
 const app = new Elysia()
   .use(elysiaLogging)
   .get("/", () => {
     if (Math.random() < 0.75) {
       return new Response("Welcome to Bun!");
     }
-    throw { message: 'Whoops!', name: 'CustomError' };
+    throw new Error("Whoops!");
   })
   .listen({
     port: Bun.env.PORT ?? 3000,
@@ -25,3 +38,4 @@ const app = new Elysia()
   });
 
 logger.info(`🦊 Running at http://${app.server?.hostname}:${app.server?.port}`);
+
