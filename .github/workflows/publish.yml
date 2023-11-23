@@ -27,9 +27,6 @@ jobs:
           //registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}
           //npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}
           EOT
-
-          npm dist-tag add <pkg name>@${GITHUB_REF_NAME} latest
-
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
