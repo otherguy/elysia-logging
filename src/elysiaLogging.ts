@@ -40,7 +40,6 @@ export const headersToCheck: IPHeaders[] = [
  * @returns A middleware function that logs incoming requests and outgoing responses.
  */
 export const ElysiaLogging =
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   (logger: Logger = console, options: RequestLoggerOptions = {}) =>
   (app: Elysia) : Elysia => {
     // Options

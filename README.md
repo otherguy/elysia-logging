@@ -78,6 +78,58 @@ Since the `console` is very limited, you may want to use a custom logger. The re
 * [Pino](https://github.com/pinojs/pino)
 * [Winston](https://github.com/winstonjs/winston)
 
+#### Pino
+
+```ts
+import { Elysia } from "elysia";
+import { ElysiaLogging, type Logger } from "@otherguy/elysia-logging";
+import { pino } from "pino";
+
+// Create Pino logger
+const logger : Logger = pino({
+  level: Bun.env.LOG_LEVEL ?? "info",
+});
+
+const app = new Elysia()
+  .use(ElysiaLogging(logger, {
+      format: "json",
+      level: "info",
+  }))
+  .get("/", () => {
+    return new Response("Welcome to Bun!");
+  })
+  .listen(Bun.env.PORT ?? 3000);
+
+logger.log(`Running at http://${app.server?.hostname}:${app.server?.port}`);
+```
+
+#### Winston
+
+```ts
+import { Elysia } from "elysia";
+import { ElysiaLogging, type Logger } from "@otherguy/elysia-logging";
+import { createLogger, transports, format } from "winston";
+
+// Create Winston logger
+const logger : Logger = createLogger({
+  level: Bun.env.LOG_LEVEL ?? "info",
+  format: format.json(),
+  transports: [new transports.Console()],
+});
+
+const app = new Elysia()
+  .use(ElysiaLogging(logger, {
+      format: "json",
+      level: "info",
+  }))
+  .get("/", () => {
+    return new Response("Welcome to Bun!");
+  })
+  .listen(Bun.env.PORT ?? 3000);
+
+logger.log(`Running at http://${app.server?.hostname}:${app.server?.port}`);
+```
+
 ## ⚖️ License
 
 This project is distributed under the [MIT](LICENSE.md) License, allowing for open source distribution and modification, subject to the terms outlined in the [LICENSE.md](LICENSE.md) file.
