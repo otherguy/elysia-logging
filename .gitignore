@@ -8,10 +8,6 @@ pids
 *.seed
 *.pid.lock
 
-# Coverage directory used by tools like istanbul
-coverage
-*.lcov
-
 # Dependency directories
 node_modules/
 
@@ -23,16 +19,10 @@ node_modules/
 .env.*.local
 .env.local
 
-# Bun build directory
-build/*
-!build/.gitkeep
+# Package dist directory
+dist/*
+!dist/.gitkeep
 
 # Jest coverage directory
 reports/*
 !reports/.gitkeep
-
-# Proto build directory
-src/proto/*
-!src/proto/.gitkeep
-
-.yarn-error.log

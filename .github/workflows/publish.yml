@@ -10,21 +10,16 @@ jobs:
       contents: write
       packages: write
     steps:
-      # Checkout project repository
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
-          fetch-depth: "0"
-      # Setup Bun environment
+          fetch-depth: 0
       - uses: oven-sh/setup-bun@v1
         with:
-          bun-version: 1.0.13
-      # Setup Node environment and install yarn
+          bun-version: 1.0.14
       - uses: actions/setup-node@v4
-      # Install dependencies
       - run: bun install
-      # Build project
-      - name: Bump version and configure NPM
+      - run: bun run build
+      - name: Set version and configure NPM
         run: |
           cat <<< $(jq --raw-output --arg version ${GITHUB_REF_NAME} '{version: $version} + .' package.json) > package.json
 
@@ -39,11 +34,9 @@ jobs:
         run: yarn publish --registry https://registry.npmjs.org/ --access=public --tag ${GITHUB_REF_NAME}
       - name: Publish to GitHub
         run: yarn publish --registry https://npm.pkg.github.com --access=public --tag ${GITHUB_REF_NAME}
-      # Update CHANGELOG.md section with new version
       - name: Update CHANGELOG.md and edit GitHub release
         run: |
           npm install github-release-notes -g
-
           gren release --tags "${GITHUB_REF_NAME}" --override --token ${GITHUB_TOKEN} --username ${GITHUB_REPOSITORY_OWNER} --repo ${GITHUB_REPOSITORY#*/}
           gren changelog --override --changelog-filename CHANGELOG.md --token ${GITHUB_TOKEN} --username ${GITHUB_REPOSITORY_OWNER} --repo ${GITHUB_REPOSITORY#*/}
         env:

@@ -1,9 +1,0 @@
-{
-  "extends": "./tsconfig.json",
-  "compilerOptions": {
-    "declaration": true,
-    "outDir": "./dist",
-    "removeComments": true
-  },
-  "include": ["src/**/*"]
-}

@@ -1,15 +1,21 @@
 {
   "compilerOptions": {
+
+    /* Output Options */
+    "declaration": true, /* Generates corresponding '.d.ts' file. */
+    "outDir": "./dist", /* Redirect output to the dist directory. */
+    "removeComments": true, /* Do not emit comments to output. */
+    "emitDecoratorMetadata": true, /* Emit design-type metadata for decorated declarations in source files. */
+
     /* Basic Options */
     "esModuleInterop": true /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */,
     "forceConsistentCasingInFileNames": true /* Ensure that casing is correct in imports. */,
     "skipLibCheck": true /* Skip type checking all .d.ts files. */,
-    "allowJs": true /* Allow JavaScript files to be a part of your program. Use the 'checkJS' option to get errors from these files. */,
+    "allowJs": false /* Allow JavaScript files to be a part of your program. Use the 'checkJS' option to get errors from these files. */,
     "resolveJsonModule": true /* Enable importing .json files. */,
     "moduleDetection": "force" /* This setting controls how TypeScript determines whether a file is a script or a module. */,
     "verbatimModuleSyntax": false /* Allow `import x = require('x')` syntax. */,
     "experimentalDecorators": true /* Enable experimental support for TC39 stage 2 draft decorators. */,
-    "noEmit": true /* Disable emitting files from a compilation. */,
     "downlevelIteration": true /* Emit more compliant, but verbose and less performant JavaScript for iteration. */,
 
     /* Strictness */
@@ -38,8 +44,10 @@
     /* Types */
     "types": [
       "bun-types",
-      "jest",
       "node"
     ], /* Specify type package names to be included without being referenced in a source file. */
-  }
+  },
+
+  /* Include */
+  "include": ["src/**/*"],
 }

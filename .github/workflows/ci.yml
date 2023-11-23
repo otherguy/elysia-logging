@@ -14,10 +14,11 @@ jobs:
           fetch-depth: 0
       - uses: oven-sh/setup-bun@v1
         with:
-          bun-version: 1.0.13
+          bun-version: 1.0.14
       - run: bun install
       - run: bun lint
       - run: bun test:coverage
+      - run: bun run build
       - uses: paambaati/codeclimate-action@v5.0.0
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
