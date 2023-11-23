@@ -1,3 +1,5 @@
+import type { Context } from "elysia";
+
 /**
  * Represents the basic authentication credentials.
  */
@@ -60,5 +62,26 @@ export type LogObject = {
   /**
    * An optional error message associated with the request.
    */
-  error?: string;
+  error?: string | object | Error;
 };
+
+/**
+ * Options for the request logger middleware.
+ */
+export interface RequestLoggerOptions {
+  level?: string;
+  format?: string | ((log: LogObject) => string | LogObject);
+  includeHeaders?: string[];
+  skip?: (ctx: Context) => boolean;
+  ipHeaders?: IPHeaders[];
+}
+
+/**
+ * Common Logger interface.
+ */
+export interface Logger  {
+  debug: <T extends unknown[]>(...args: T) => void;
+  info: <T extends unknown[]>(...args: T) => void;
+  warn: <T extends unknown[]>(...args: T) => void;
+  error: <T extends unknown[]>(...args: T) => void;
+}

@@ -1,13 +1,15 @@
 import { Elysia } from "elysia";
 import { ElysiaLogging } from "../src/elysiaLogging";
+import { Logger } from "../src/types";
 
-interface MockLogger {
-  debug: (msg: string) => void;
-  info: (msg: string) => void;
-  error: (msg: string) => void;
-  warn: (msg: string) => void;
-  http: (msg: string) => void;
+interface MockLogger extends Logger {
+  debug: <T extends unknown[]>(...args: T) => void;
+  info: <T extends unknown[]>(...args: T) => void;
+  warn: <T extends unknown[]>(...args: T) => void;
+  error: <T extends unknown[]>(...args: T) => void;
+  http: <T extends unknown[]>(...args: T) => void;
 }
+
 
 describe("ElysiaLogging", () => {
   let app: Elysia;
@@ -46,7 +48,7 @@ describe("ElysiaLogging", () => {
 
     expect(logger.http).toHaveBeenCalled();
     expect(logger.http).toHaveBeenCalledWith({
-      message: expect.any(String),
+      message: expect.any(String) as string,
       request: {
         ip: undefined, //"::ffff:127.0.0.1",
         method: "GET",
@@ -57,7 +59,7 @@ describe("ElysiaLogging", () => {
       },
       response: {
         status_code: 200,
-        time: expect.any(Number),
+        time: expect.any(Number) as number,
       },
     });
   });
@@ -114,7 +116,7 @@ describe("ElysiaLogging", () => {
 
     expect(logger.info).toHaveBeenCalled();
     expect(logger.info).toHaveBeenCalledWith({
-      message: expect.any(String),
+      message: expect.any(String) as string,
       request: {
         ip: undefined, // "::ffff:127.0.0.1"
         method: "GET",
@@ -125,13 +127,13 @@ describe("ElysiaLogging", () => {
       },
       response: {
         status_code: 500,
-        time: expect.any(Number),
+        time: expect.any(Number) as number,
       },
       error: error,
     });
   });
 
-  it("logs error string there is one", async () => {
+  it("logs error string if there is one", async () => {
     const error = "Something went wrong";
 
     app.use(
@@ -148,7 +150,7 @@ describe("ElysiaLogging", () => {
 
     expect(logger.info).toHaveBeenCalled();
     expect(logger.info).toHaveBeenCalledWith({
-      message: expect.any(String),
+      message: expect.any(String) as string,
       request: {
         ip: undefined, // "::ffff:127.0.0.1"
         method: "GET",
@@ -159,7 +161,7 @@ describe("ElysiaLogging", () => {
       },
       response: {
         status_code: 500,
-        time: expect.any(Number),
+        time: expect.any(Number) as number,
       },
       error: error,
     });

@@ -31,7 +31,7 @@ export class Log {
   }
 
   // Getters and setters
-  public set error(error: any) {
+  public set error(error: string | object | Error) {
     this.logObject.error = error;
   }
 
@@ -44,10 +44,10 @@ export class Log {
    *
    * @returns Log object as is
    */
-  formatJson(): any {
+  formatJson() : LogObject {
     return { ...{
       message: `${this.logObject.request.method} ${this.logObject.request.url.path} completed with status ${this.logObject.response.status_code} in ${formatDuration(this.logObject.response.time)}`
-    }, ...this.logObject } as any;
+    }, ...this.logObject };
   }
 
   /**

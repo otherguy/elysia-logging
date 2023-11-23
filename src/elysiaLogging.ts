@@ -1,5 +1,5 @@
-import type { IPHeaders, LogObject } from "./types";
-import type { Elysia, Context } from "elysia";
+import type { IPHeaders, LogObject, Logger, RequestLoggerOptions } from "./types";
+import type { Elysia } from "elysia";
 import { getIP, getFormattingMethodName } from "./helpers";
 import { Log } from "./log";
 import process from "process";
@@ -26,19 +26,6 @@ export const headersToCheck: IPHeaders[] = [
   'cf-pseudo-ipv4', // Cloudflare
 ]
 
-
-/**
- * Options for the request logger middleware.
- */
-interface RequestLoggerOptions {
-  level?: string;
-  format?: string | ((log: LogObject) => any);
-  includeHeaders?: string[];
-  skip?: (ctx: Context) => boolean;
-  ipHeaders?: IPHeaders[];
-}
-
-
 /**
  * Creates a middleware function that logs incoming requests and outgoing responses.
  *
@@ -53,7 +40,8 @@ interface RequestLoggerOptions {
  * @returns A middleware function that logs incoming requests and outgoing responses.
  */
 export const ElysiaLogging =
-  (logger: any = console, options: RequestLoggerOptions = {}) =>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (logger: Logger = console, options: RequestLoggerOptions = {}) =>
   (app: Elysia) : Elysia => {
     // Options
     const {
@@ -63,6 +51,7 @@ export const ElysiaLogging =
       includeHeaders = ["x-forwarded-for", "authorization"],
       ipHeaders = headersToCheck,
     } = options;
+
 
     // If the formatting method does not exist, throw an error
     if (typeof format === 'string' && getFormattingMethodName(format) in Log.prototype === false) {
@@ -92,9 +81,9 @@ export const ElysiaLogging =
         // Calculate duration if it's set on the context
         let duration: number = 0;
 
-        if ((ctx.store as any).requestStart !== undefined && typeof (ctx.store as any).requestStart === 'bigint') {
+        if ((ctx.store as { requestStart? : bigint }).requestStart!== undefined && typeof (ctx.store as { requestStart? : bigint }).requestStart === 'bigint') {
           duration = Number(
-            process.hrtime.bigint() - (ctx.store as any).requestStart
+            process.hrtime.bigint() - (ctx.store as { requestStart : bigint }).requestStart
           );
         }
 
@@ -114,8 +103,8 @@ export const ElysiaLogging =
           },
         });
 
-        if ((ctx.store as any).error !== undefined) {
-          logObject.error = (ctx.store as any).error;
+        if ((ctx.store as { error? : string | Error | object }).error !== undefined) {
+          logObject.error = (ctx.store as { error : string | Error | object }).error;
         }
 
         // Add request ID if it exists
@@ -134,7 +123,7 @@ export const ElysiaLogging =
           }
         }
 
-        let logOutput: any;
+        let logOutput: string | LogObject;
 
         // If the log format is a function, call it and log the output
         if(typeof format === 'function') {
@@ -144,9 +133,11 @@ export const ElysiaLogging =
             format
           ) as Exclude<Exclude<Exclude<keyof typeof logObject, "prototype">, "log">, "error">
           logOutput = logObject[formattingMethod]();
+        } else {
+          throw new Error(`Invalid formatting method type '${typeof format}'!`);
         }
 
         // This invokes, e.g. `logger.info(logOutput)` for any given level
-        logger[level](logOutput);
+        logger[level as keyof typeof logger](logOutput);
       });
   };
