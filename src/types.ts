@@ -79,7 +79,7 @@ export interface RequestLoggerOptions {
 /**
  * Common Logger interface.
  */
-export interface Logger  {
+export interface Logger {
   debug: <T extends unknown[]>(...args: T) => void;
   info: <T extends unknown[]>(...args: T) => void;
   warn: <T extends unknown[]>(...args: T) => void;

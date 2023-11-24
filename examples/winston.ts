@@ -38,4 +38,3 @@ const app = new Elysia()
   });
 
 logger.info(`🦊 Running at http://${app.server?.hostname}:${app.server?.port}`);
-

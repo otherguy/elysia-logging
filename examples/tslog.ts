@@ -1,17 +1,15 @@
 import { Elysia } from "elysia";
 import { ElysiaLogging } from "../src/elysiaLogging";
 import { type Logger } from "../src/types";
-import { createLogger, INFO } from 'bunyan'
+import { Logger as TSLog, ILogObj } from "tslog";
 
-// Define Bunyan logger
-const logger : Logger = createLogger ({
-  name: "logger",
-  streams: [ { level: INFO, stream: process.stdout } ],
-});
+// Define TSLog logger
+const logger : TSLog<ILogObj> = new TSLog();
 
-const elysiaLogging = ElysiaLogging(logger, {
-  // Access logs in JSON format
-  format: "json",
+// Define a custom TSLog logger interface that includes the "http" level
+const elysiaLogging = ElysiaLogging(logger as Logger, {
+  level: "info",
+  format: "short",
 })
 
 //
@@ -28,4 +26,4 @@ const app = new Elysia()
     maxRequestBodySize: Number.MAX_SAFE_INTEGER,
   });
 
-logger.info(`🦊 Running at http://${app.server?.hostname}:${app.server?.port}`);
+logger.silly(`🦊 Running at http://${app.server?.hostname}:${app.server?.port}`);

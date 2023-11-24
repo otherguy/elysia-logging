@@ -82,12 +82,13 @@ Since the `console` is very limited, you may want to use a custom logger. The re
 See the [examples](examples) directory for implementation examples.
 
 * [Pino](https://github.com/pinojs/pino) (see [example](examples/pino.ts))
+* [TSLog](https://tslog.js.org/) (see [example](examples/tslog.ts))
 * [Winston](https://github.com/winstonjs/winston) (see [example](examples/winston.ts))
 * [Bunyan](https://github.com/trentm/node-bunyan) (see [example](examples/bunyan.ts))
 
 ## 🪜 Examples
 
-A few examples are provided in the [`examples`](examples) directory.
+Even more examples are provided in the [`examples`](examples) directory.
 
 * [Basic](examples/basic.ts) - A basic example of using the plugin with the default settings
 * [JSON](examples/json.ts) - A basic example of logging in JSON
@@ -95,13 +96,14 @@ A few examples are provided in the [`examples`](examples) directory.
 * [On Error](examples/on-error.ts) - An example of logging errors in addition to access logging
 * [Pino](examples/pino.ts) - An example of using the [Pino](https://github.com/pinojs/pino) logger
 * [Pino Pretty](examples/pino.ts) - An example of using the [Pino](https://github.com/pinojs/pino) logger with [pino-pretty](https://github.com/pinojs/pino-pretty) _(not recommended for production)_
+* [TSLog](examples/tslog.ts) - An example of using the [TSLog](https://tslog.js.org/) logger
+* [Bunyan](examples/bunyan.ts) - An example of using the [Bunyan](https://github.com/trentm/node-bunyan) logger
 * [Winston](examples/winston.ts) - An example of using the [Winston](https://github.com/winstonjs/winston) logger
 
 ## 📜 To Do
 
 * [ ] Add logger format classes
 * [ ] Add whitelist for request parameters
-* [ ] Add more logger examples (~~Bunyan~~, npmlog)
 
 ## ⚖️ License
 
