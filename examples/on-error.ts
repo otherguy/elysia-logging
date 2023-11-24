@@ -1,13 +1,13 @@
 import { Elysia } from "elysia";
 import { ElysiaLogging } from "../src/elysiaLogging";
-import { type Logger } from "../src/types";
+import { type Logger, LogFormat } from "../src/types";
 
 // Use console for logging
 const logger : Logger = console;
 
 // Create ElysiaLogging instance
 const elysiaLogging = ElysiaLogging(logger, {
-  format: "short",
+  format: LogFormat.SHORT
 });
 
 // Create Elysia app

@@ -22,6 +22,7 @@ import { formatDuration, parseBasicAuthHeader } from './helpers';
  * console.log(log.formatJson());
  **/
 export class Log {
+
   // Properties
   private logObject: LogObject;
 

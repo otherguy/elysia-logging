@@ -1,16 +1,15 @@
 import { Elysia } from "elysia";
 import { ElysiaLogging } from "../src/elysiaLogging";
-import { type Logger } from "../src/types";
+import { type Logger, LogFormat } from "../src/types";
 import { Logger as TSLog, ILogObj } from "tslog";
 
 // Define TSLog logger
 const logger : TSLog<ILogObj> = new TSLog();
 
-// Define a custom TSLog logger interface that includes the "http" level
 const elysiaLogging = ElysiaLogging(logger as Logger, {
   level: "info",
-  format: "short",
-})
+  format: LogFormat.SHORT,
+});
 
 //
 const app = new Elysia()

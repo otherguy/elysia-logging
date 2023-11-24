@@ -1,6 +1,6 @@
 import { Elysia } from "elysia";
 import { ElysiaLogging } from "../src/elysiaLogging";
-import { type Logger } from "../src/types";
+import { type Logger, LogFormat } from "../src/types";
 import { pino, type Logger as PinoLogger, LoggerOptions } from "pino";
 
 // Define a custom Pino logger interface that includes the "http" level
@@ -40,8 +40,8 @@ const elysiaLogging = ElysiaLogging(logger as Logger, {
   level: "http",
 
   // Access logs in JSON format
-  format: "json",
-})
+  format: LogFormat.JSON,
+});
 
 //
 const app = new Elysia()
