@@ -1,6 +1,6 @@
 import { Elysia } from "elysia";
 import { ElysiaLogging } from "../src/elysiaLogging";
-import { type Logger } from "../src/types";
+import { type Logger, LogFormat } from "../src/types";
 import { pino } from "pino";
 
 // Define Pino logger
@@ -52,7 +52,7 @@ const elysiaLogging = ElysiaLogging(logger, {
   level: "http",
 
   // Access logs in JSON format
-  format: "json"
+  format: LogFormat.JSON
 });
 
 //

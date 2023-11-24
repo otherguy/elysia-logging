@@ -1,4 +1,24 @@
 import type { Context } from "elysia";
+import { Log } from "./log";
+
+// This creates a type that is like "json" | "common" | "short"
+type LogFormatString = {[K in keyof typeof Log.prototype as K extends `format${infer Rest}` ? Lowercase<Rest> : never]: typeof Log.prototype[K]};
+
+// This is the type of a function that takes a LogObject and returns a string or a LogObject
+type LogFormatMethod = (log: LogObject) => string | LogObject;
+
+// This creates a LogFormat const that is like "JSON"="json", "COMMON"="common", "SHORT"="short"
+type LogFormatRecord = Record<Uppercase<keyof LogFormatString>, string>;
+
+//
+export const LogFormat = {
+  JSON: 'json',
+  COMMON: 'common',
+  SHORT: 'short',
+  // Add other methods here
+} as const;
+
+export type LogFormatType = keyof LogFormatString | LogFormatMethod | LogFormatter | LogFormatRecord;
 
 /**
  * Represents the basic authentication credentials.
@@ -70,7 +90,7 @@ export type LogObject = {
  */
 export interface RequestLoggerOptions {
   level?: string;
-  format?: string | ((log: LogObject) => string | LogObject);
+  format?: LogFormatType, // string | ((log: LogObject) => string | LogObject);
   includeHeaders?: string[];
   skip?: (ctx: Context) => boolean;
   ipHeaders?: IPHeaders[];
@@ -84,4 +104,21 @@ export interface Logger {
   info: <T extends unknown[]>(...args: T) => void;
   warn: <T extends unknown[]>(...args: T) => void;
   error: <T extends unknown[]>(...args: T) => void;
+}
+
+/**
+ * Interface for a log formatter.
+ *
+ * A log formatter is a class with a format() method that takes a log
+ * object and returns a string or a log object.
+ */
+export interface LogFormatter {
+  /**
+   * Formats a log object.
+   *
+   * @param log Log object to format
+   *
+   * @returns Formatted log object or string
+   */
+  format(log: LogObject): string | LogObject;
 }

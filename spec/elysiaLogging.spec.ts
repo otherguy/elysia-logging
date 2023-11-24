@@ -1,15 +1,10 @@
 import { Elysia } from "elysia";
 import { ElysiaLogging } from "../src/elysiaLogging";
-import { type Logger } from "../src/types";
+import { LogFormatType, type Logger } from "../src/types";
 
 interface MockLogger extends Logger {
-  debug: <T extends unknown[]>(...args: T) => void;
-  info: <T extends unknown[]>(...args: T) => void;
-  warn: <T extends unknown[]>(...args: T) => void;
-  error: <T extends unknown[]>(...args: T) => void;
   http: <T extends unknown[]>(...args: T) => void;
 }
-
 
 describe("ElysiaLogging", () => {
   let app: Elysia;
@@ -169,7 +164,7 @@ describe("ElysiaLogging", () => {
 
   it("throws an error if format is not a valid format string", () => {
     const middleware = ElysiaLogging(logger, {
-      format: "invalid-format"
+      format: "invalid-format" as unknown as LogFormatType
     });
 
     expect(() => app.use(middleware)).toThrow("Formatter 'invalid-format' not found!");
