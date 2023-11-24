@@ -81,8 +81,9 @@ Since the `console` is very limited, you may want to use a custom logger. The re
 
 See the [examples](examples) directory for implementation examples.
 
-* [Pino](https://github.com/pinojs/pino) (see [Pino](examples/pino.ts) and [Pino Pretty](examples/pino-pretty.ts) examples)
-* [Winston](https://github.com/winstonjs/winston) (see [Winston](examples/winston.ts) example)
+* [Pino](https://github.com/pinojs/pino) (see [example](examples/pino.ts))
+* [Winston](https://github.com/winstonjs/winston) (see [example](examples/winston.ts))
+* [Bunyan](https://github.com/trentm/node-bunyan) (see [example](examples/bunyan.ts))
 
 ## 🪜 Examples
 
@@ -100,7 +101,7 @@ A few examples are provided in the [`examples`](examples) directory.
 
 * [ ] Add logger format classes
 * [ ] Add whitelist for request parameters
-* [ ] Add more logger examples (Bunyan, npmlog)
+* [ ] Add more logger examples (~~Bunyan~~, npmlog)
 
 ## ⚖️ License
 
