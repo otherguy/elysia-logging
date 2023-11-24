@@ -1,10 +1,15 @@
 import { Elysia } from "elysia";
 import { ElysiaLogging } from "../src/elysiaLogging";
 import { type Logger } from "../src/types";
-import { pino } from "pino";
+import { pino, type Logger as PinoLogger, LoggerOptions } from "pino";
+
+// Define a custom Pino logger interface that includes the "http" level
+interface CustomPinoLogger extends PinoLogger<LoggerOptions> {
+  http: <T extends unknown[]>(...args: T) => void;
+}
 
 // Define Pino logger
-const logger : Logger = pino({
+const logger : CustomPinoLogger = pino({
   // Use the LOG_LEVEL environment variable, or default to "info"
   level: Bun.env.LOG_LEVEL ?? "info",
 
@@ -26,11 +31,11 @@ const logger : Logger = pino({
 
   // Define a custom "http" level
   customLevels: {
-    http: 35, // same as `info`
+    http: 35 // same as `info`
   },
 });
 
-const elysiaLogging = ElysiaLogging(logger, {
+const elysiaLogging = ElysiaLogging(logger as Logger, {
   // Use the pino "http" custom level defined above
   level: "http",
 
@@ -52,5 +57,4 @@ const app = new Elysia()
     maxRequestBodySize: Number.MAX_SAFE_INTEGER,
   });
 
-logger.info(`🦊 Running at http://${app.server?.hostname}:${app.server?.port}`);
-
+logger.http(`🦊 Running at http://${app.server?.hostname}:${app.server?.port}`);
