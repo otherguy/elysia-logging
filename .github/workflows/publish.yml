@@ -15,7 +15,7 @@ jobs:
           fetch-depth: 0
       - uses: oven-sh/setup-bun@v1
         with:
-          bun-version: 1.0.14
+          bun-version: 1.0.30
       - uses: actions/setup-node@v4
       - run: bun install
       - run: bun run build
