@@ -19,7 +19,7 @@ jobs:
       - run: bun lint
       - run: bun test:coverage
       - run: bun run build
-      - uses: paambaati/codeclimate-action@v5.0.0
+      - uses: paambaati/codeclimate-action@v6.0.0
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
         with:
