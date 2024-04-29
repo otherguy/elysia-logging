@@ -1,3 +1,4 @@
+---
 name: ci
 on:
   pull_request:
@@ -23,8 +24,7 @@ jobs:
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
         with:
-          coverageLocations: |
-            reports/lcov.info:lcov
+          coverageLocations: reports/lcov.info:lcov
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
