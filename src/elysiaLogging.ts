@@ -71,7 +71,7 @@ export const ElysiaLogging =
       .onAfterHandle((ctx) => {
         ctx.store = { responseSize: undefined, ...ctx.store };
       })
-      .onAfterResponse((ctx) => {
+      .onResponse((ctx) => {
         // Skip logging if skip function returns true
         if (skip && typeof skip === "function" && skip(ctx)) {
           return;
