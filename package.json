@@ -43,10 +43,10 @@
   "dependencies": {
     "date-fns": "^2.30.0",
     "date-fns-tz": "^2.0.0",
-    "elysia": ">= 0.7.17"
+    "elysia": "^0.8.17"
   },
   "peerDependencies": {
-    "elysia": ">= 0.7.17"
+    "elysia": "^0.8.17"
   },
   "optionalDependencies": {
     "pino": "^8.16.2",
