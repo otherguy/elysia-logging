@@ -41,7 +41,7 @@
     "reportFile": "test-report.xml"
   },
   "dependencies": {
-    "date-fns": "^2.30.0",
+    "date-fns": "^3.6.0",
     "date-fns-tz": "^2.0.0",
     "elysia": "^0.8.17"
   },
